@@ -6,9 +6,7 @@
 # http://creativecommons.org/licenses/by-nc-sa/4.0/
 # -------------------------------------------------------------------
 
-# Modified Author: Xudong Lv
 # based on github.com/cattaneod/CMRNet/blob/master/utils.py
-# Modified Author: Hao Wang
 # based on https://github.com/LvXudong-HIT/LCCNet/utils.py
 import math
 import matplotlib.pyplot as plt

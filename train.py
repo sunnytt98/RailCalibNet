@@ -1,6 +1,6 @@
 import math
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -12,7 +12,7 @@ from models.railcalibnet import calib_net
 from quaternion_distances import quaternion_distance
 from tensorboardX import SummaryWriter
 from utils import merge_inputs
-import cppcuda_tutorial
+import lidar_pro
 import argparse
 from tqdm import tqdm
 
@@ -127,7 +127,7 @@ def main():
                 pc_rotated_list.append(sample['pc_rotated'][idx].cuda())
                 point_gt_list.append(sample['point_gt'][idx].cuda())
                 camera_matrix = sample['KK'][idx].cuda().float()
-                depth_img = cppcuda_tutorial.points2img2(pc_rotated_, camera_matrix,90.0, 2, ww, hh)
+                depth_img = lidar_pro.lidar_pro(pc_rotated_, camera_matrix, 90.0, 2, ww, hh)
                 depth_img = F.interpolate(depth_img.unsqueeze(0).unsqueeze(0), size=opts.input_shape, mode="bilinear")
                 rgb_img =  F.interpolate(rgb_img.unsqueeze(0), size=opts.input_shape, mode="bilinear")
                 rgb_img = rgb_img.cuda()
@@ -178,7 +178,7 @@ def main():
                 point_gt_list.append(sample['point_gt'][idx].cuda())
                 camera_matrix = sample['KK'][idx].cuda().float()
                 # 80000.0, 0, hh, ww)
-                depth_img = cppcuda_tutorial.points2img2(pc_rotated_, camera_matrix,90.0, 2, ww, hh)
+                depth_img = lidar_pro.lidar_pro(pc_rotated_, camera_matrix, 90.0, 2, ww, hh)
                 depth_img = F.interpolate(depth_img.unsqueeze(0).unsqueeze(0), size=opts.input_shape, mode="bilinear")
                 rgb_img =  F.interpolate(rgb_img.unsqueeze(0), size=opts.input_shape, mode="bilinear")
                 lidar_input.append(depth_img)

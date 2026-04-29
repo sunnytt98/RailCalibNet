@@ -15,7 +15,7 @@ from DatasetLidar import DatasetLidarCameraKittiOdometry
 from quaternion_distances import quaternion_distance
 from utils import mat2xyzrpy, merge_inputs, quat2mat, quaternion_from_matrix, tvector2mat
 
-import cppcuda_tutorial
+import lidar_pro
 import argparse
 
 
@@ -82,7 +82,7 @@ def main():
                 RT = RT_inv.clone().inverse()
                 pc_rotated_ = sample['pc_rotated'][idx].permute(1, 0)[:,:3].cuda().contiguous()
                 camera_matrix = sample['KK'][idx].cuda().float()
-                depth_img = cppcuda_tutorial.points2img2(pc_rotated_, camera_matrix,90.0, 2, ww, hh)
+                depth_img = lidar_pro.lidar_pro(pc_rotated_, camera_matrix, 90.0, 2, ww, hh)
                 depth_img = F.interpolate(depth_img.unsqueeze(0).unsqueeze(0), size=opts.input_shape, mode="bilinear")
                 rgb_img =  F.interpolate(rgb_img.unsqueeze(0), size=opts.input_shape, mode="bilinear")
                 lidar_input.append(depth_img)
@@ -128,5 +128,4 @@ def main():
 
 if __name__=='__main__':
     main() 
-
 

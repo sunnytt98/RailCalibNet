@@ -6,7 +6,6 @@ import torch
 import torch.nn.functional as F
 import torch.optim as optim
 import torch.utils.data
-import torch.nn as nn
 from DatasetLidar import DatasetLidarCameraKittiOdometry
 from losses import CombinedLoss
 from models.railcalibnet import calib_net

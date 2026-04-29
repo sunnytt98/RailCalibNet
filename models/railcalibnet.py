@@ -2,7 +2,7 @@ import torch
 from torchvision.models._utils import IntermediateLayerGetter
 import torch.nn as nn
 import torch.nn.functional as F
-from torchvision.models import resnet50, resnet34,resnet18
+from torchvision.models import resnet18
 
 
 class pre_head(nn.Module):
